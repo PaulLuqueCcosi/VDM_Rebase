@@ -1,0 +1,28 @@
+class Auto
+
+instance variables
+  velocidad : real;
+  latitud : token;
+  longitud : token;
+  public estado : estadoAceleracion; -- Puedes definir Quote como un tipo con valores posibles <Acelerando>, <Desacelerando>, <Quieto>
+  tamano : real;
+  inercia : real;
+
+
+types
+  public estadoAceleracion = <Acelerando> | <Desacelerando> | <Quieto>;
+
+
+operations
+  public getInercia: () ==> real
+  getInercia() ==
+    return inercia;
+
+
+  public getEstado: () ==> estadoAceleracion
+  getEstado() ==
+    -- Implementación para obtener el estado de aceleración
+    return estado;
+
+
+end Auto
