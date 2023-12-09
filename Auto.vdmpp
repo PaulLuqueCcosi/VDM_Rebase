@@ -1,28 +1,94 @@
 class Auto
 
-instance variables
-  velocidad : real;
-  latitud : token;
-  longitud : token;
-  public estado : estadoAceleracion; -- Puedes definir Quote como un tipo con valores posibles <Acelerando>, <Desacelerando>, <Quieto>
-  tamano : real;
-  inercia : real;
-
-
 types
-  public estadoAceleracion = <Acelerando> | <Desacelerando> | <Quieto>;
+  public ubicacionRegister :: longitud : real latitud : real;
+  public estadoAceleracion = <Acelerando> | <Desacelerando> | <Quieto> | <VelocidadConstante>;
+  public etiquetaPosicion = <Carril_2> | <Carril_1_adelante> | <Carril_1_atas>;
+
+values
+  umbralMinimaAcelearcion : real = 0.1;
+
+instance variables
+  aceleracion : real := 0;
+  aceleracionInstanteAnterior : real :=0 ;
+  velocidad: real := 0;
+  velocidadInstanteAnterior: real := 0;
+  public estado: estadoAceleracion := <Quieto>; 
+  public etiqueta: etiquetaPosicion;
+  tamano: real := 0;
+  public ubicacion: ubicacionRegister := mk_ubicacionRegister(0,0);
+  usuario: Usuario;
+
+inv ubicacion.longitud >= 0 and ubicacion.longitud <= 180;
+inv ubicacion.latitud >= 0 and ubicacion.latitud <= 90;
+inv tamano > 0;
 
 
 operations
-  public getInercia: () ==> real
-  getInercia() ==
-    return inercia;
+      -- Constructor para crear un nuevo auto con los datos proporcionados
+  public Auto: real * estadoAceleracion * etiquetaPosicion * real * real * real * Usuario==> Auto
+  Auto(velo, estadoAceleracion, etiquetaPosi, tama, lon, lat, user) ==
+    (
+      velocidad := velo;
+      estado := estadoAceleracion;
+      etiqueta := etiquetaPosi;
+      tamano := tama;
+      ubicacion := mk_ubicacionRegister(lon, lat);
+      usuario := user;
+      return self;
+    );
+  
+  -- Actualizar velocdad
 
+  public setVelocidad : real ==> ()
+  setVelocidad(nuevaVelocidad) == (
+    velocidadInstanteAnterior := velocidad;
+    velocidad := nuevaVelocidad;
+  );
 
+  -- calcular aceleracion
+
+  public calcularAceleracion : real ==> real
+  calcularAceleracion(intervaloTiempo) == (
+    aceleracionInstanteAnterior := aceleracion;
+    aceleracion := (velocidad-velocidadInstanteAnterior)/intervaloTiempo;
+
+    if abs(aceleracion) < umbralMinimaAcelearcion
+      then setEstadoAceleracion(<VelocidadConstante>)
+    else if aceleracion < 0 
+      then setEstadoAceleracion(<Desacelerando>)
+    else if aceleracion > 0
+      then setEstadoAceleracion(<Acelerando>);
+    
+
+    return aceleracion;
+  );
+
+  -- Operación para obtener el estado de aceleración
   public getEstado: () ==> estadoAceleracion
   getEstado() ==
-    -- Implementación para obtener el estado de aceleración
     return estado;
 
+  -- Operación para obtener la ubicación del auto
+  public getUbicacion: () ==> ubicacionRegister
+  getUbicacion() ==
+    return ubicacion;
 
+  public setUbicacion : real * real ==> Auto
+  setUbicacion(latitud, longitud) == (
+    ubicacion := mk_ubicacionRegister(longitud, latitud);
+    IO`print(ubicacion.latitud);
+    return self;
+  );
+
+  public setEstadoAceleracion : estadoAceleracion ==> ()
+  setEstadoAceleracion (nuevoEstado) == (
+    estado := nuevoEstado;
+  );
+  
+  -- public test: (real) ==> real
+  -- test(nueva) == (
+  --   self.setVelocidad(nueva);
+  --   return self.calcularAceleracion(0.2);
+  -- );
 end Auto
