@@ -10,6 +10,18 @@ instance variables
 types
 
 operations
+
+  public Usuario: () ==> Usuario
+  Usuario() ==
+      (
+      nombres := "Paul Alexander";
+      apellidos := "Luque Ccosi";
+      edad := 20;
+      tiempoDeLicencia := 26;
+      numCelular := "927539935";
+      return self;
+      );
+
   public Usuario: seq of char *  seq of char * nat * nat * seq of char ==> Usuario
   Usuario(newNombre, apellido, newEdad, newTiempoDeLicencia, newNumCelular) ==
       (
