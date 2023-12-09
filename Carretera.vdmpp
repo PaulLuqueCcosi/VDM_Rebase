@@ -1,0 +1,75 @@
+
+class Carretera
+
+types
+  public formaCarretera = <Curva_en_U> | <Curva_y_Contracurva> | <Recto>;
+  public tipoCarretera = <Doble_Via>;
+
+values
+  public radioTierraKm : real = 6371.0;
+
+instance variables
+  forma: formaCarretera;
+  tipo: tipoCarretera;
+
+functions
+
+  private min: real * real -> real
+    min(x, y) ==
+      if x < y then
+        x
+      else
+        y;
+
+  private toRadians: real +> real
+      toRadians(degree) ==
+        degree * (MATH`pi / 180.0);
+
+  private haversine: real * real * real * real -> real
+    haversine(lat1, lon1, lat2, lon2) == 
+    let  
+      dlon : real = toRadians(lon2-lon1),
+      dlat : real = toRadians(lat2-lat1),
+      sinLat = MATH`sin(dlat / 2.0),
+      sinlon = MATH`sin(dlon / 2.0),
+      a = (sinLat * sinLat) + MATH`cos(toRadians(lat1)) * MATH`cos(toRadians(lat2)) * (sinlon * sinlon),
+      c = 2.0 * MATH`asin(min(1.0, MATH`sqrt(a)))
+    in
+      radioTierraKm * c;
+
+    
+
+operations
+
+  -- Constructor para crear una nueva carretera con la forma y tipo proporcionados
+  public Carretera: formaCarretera * tipoCarretera ==> Carretera
+  Carretera(formaParametro, tipoParemetro) ==
+    (
+      forma := formaParametro;
+      tipo := tipoParemetro;
+      return self;
+    );
+
+  -- Método para verificar las condiciones de la carretera y calificar la seguridad
+  public verificarCondiciones: () ==> nat
+  verificarCondiciones() ==
+    -- Implementa la lógica para verificar condiciones y asignar una calificación
+    -- (seguro/no seguro o una calificación del 1 al 100)
+    return 0;  -- Modificar según la lógica real
+
+  -- Método para obtener la distancia entre dos puntos en la carretera
+  public getDistanciaCarretera: real * real * real * real ==> real
+  getDistanciaCarretera(latitud_1, longitud_1, latitud_2, lonigtud_2) == (
+    -- Implementa la lógica para calcular la distancia entre los puntos en la carretera
+    if forma = <Recto> then
+      return haversine(latitud_1, longitud_1, latitud_2, lonigtud_2);
+    return 0.0; 
+
+  );
+    
+  public test: real * real * real * real ==> real
+  test(lat1, lon1, lat2, lon2 ) == (
+    return self.getDistanciaCarretera(lat1, lon1, lat2, lon2);
+  );
+
+end Carretera
