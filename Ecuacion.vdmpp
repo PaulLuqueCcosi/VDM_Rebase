@@ -14,21 +14,21 @@ operations
   );
   public calcularRaices: real * real * real ==> Ecuacion
   calcularRaices(a, b, c) == (
-    -- let
-    --   discriminante : real = b * b - 4 * a * c
-    -- in
-    --   if discriminante = 0 then 
-    --     (raices := [-b / 2 * a];
-    --     raiz1 := raices(1);
-    --     )
-    --   elseif discriminante > 0 then 
-    --     (
-    --       raices := [(-b + Math`sqrt(discriminante)) / (2 * a), (-b - Math`sqrt(discriminante)) / (2 * a)];
-    --       raiz1 := raices(1);
-    --       raiz2 := raices(2);
-    --     )
-    --   else 
-    --     raices := [];
+    let
+      discriminante : real = b * b - 4 * a * c
+    in
+      if discriminante = 0 then 
+        (raices := [-b / 2 * a];
+        raiz1 := raices(1);
+        )
+      elseif discriminante > 0 then 
+        (
+          raices := [(-b + MATH`sqrt(discriminante)) / (2 * a), (-b - MATH`sqrt(discriminante)) / (2 * a)];
+          raiz1 := raices(1);
+          raiz2 := raices(2);
+        )
+      else 
+        raices := [];
       
       return self;
   );

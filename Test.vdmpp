@@ -85,26 +85,25 @@ operations
 -- Método para probar la clase Sistema
 public testSistema: () ==> bool
 testSistema() == (
-    -- sistema := new Sistema();
-
-    -- -- Crear usuarios
-    -- usuario1 := new Usuario("Juan", "Lopez",  25, 2, "123456789");
-    -- usuario2 := new Usuario("Maria", "Lopez", 30, 5, "987654321");
-    -- usuario3 := new Usuario("Jose","Lopez",  32, 2, "987654781");
+    -- Crear usuarios
+    usuario1 := new Usuario("Juan", "Lopez", 25, 2, "123456789");
+    usuario2 := new Usuario("Maria","Lopez", 30, 5, "987654321");
+    usuario3 := new Usuario("Jose","Lopez", 32, 2, "987654781");
 
     -- -- Crear autos con usuarios
-    -- -- auto1 := new Auto(90, <Quieto>, 4.5, 0.2, -71.5343, -16.4014, usuario1);
-    -- -- auto2 := new Auto(80, <Acelerando>, 4.0, 0.1, -71.5340, -16.4010, usuario2);
-    -- -- auto3 := new Auto(80, <Acelerando>, 4.0, 0.1, -71.5342, -16.4011, usuario2);
+    auto1 := new Auto(90, <Quieto>, 2 , -71.5343, -16.4014, usuario1);
+    auto2 := new Auto(80, <Acelerando>, 2, -71.5340, -16.4010, usuario2);
+    auto3 := new Auto(80, <Acelerando>, 2, -71.5342, -16.4011, usuario2);
 
-    -- -- Crear carretera
-    -- carretera := new Carretera(<Recto>, <Doble_Via>, 90);
+    -- Crear carretera
+    carretera := new Carretera(<Recto>, <Doble_Via>, 90);
 
-    -- -- Iniciar situaciones de rebase en el sistema
-    -- sistema.IniciarSituacionDeRebase(auto1, auto2, auto3, carretera);
-    -- sistema.IniciarSituacionDeRebase(auto2, auto3, auto1, carretera);
-    -- sistema.IniciarSituacionDeRebase(auto3, auto1, auto2, carretera);
+    -- 
+    sistema := new Sistema();
+    sistema.IniciarSituacionDeRebase(auto1, auto2, auto3, carretera);
 
+    sistema.actualizar(-71.5343, -16.4014, 92, -71.54243, -16.42344, 92 , -71.531443, -16.401234, 92, 0.2);
+    sistema.notificar();
 
     return true;
 );
