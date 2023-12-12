@@ -63,22 +63,15 @@ operations
             distancia = carretera.getDistanciaPuntos(-16.3421, -17.353, -16.34341, -17.453),
             vel = carretera.getVelocidadMaxima(),
             distancia = carretera.distanciaMinimaAdelantamiento(),
-
             carretera2 = new Carretera(<Curva_en_U>, <Doble_Via>, 100),
             carretera3 = new Carretera(<Curva_y_Contracurva>, <Doble_Via>, 40),
-
             distancia = carretera2.getDistanciaPuntos(-16.3421, -17.353, -16.34341, -17.453),
             vel2 = carretera2.getVelocidadMaxima(),
             vel3 = carretera3.getVelocidadMaxima(),
-
             distancia2 = carretera2.distanciaMinimaAdelantamiento(),
             distancia3 = carretera3.distanciaMinimaAdelantamiento()
-            
         in
-        
             return true;
-        -- carretera := new Carretera(<Recto>, <Doble_Via>, 90);
-        -- return  carretera.getDistanciaPuntos(-71.5343, -16.4014, -71.5243, -16.4124) = 0; 
     );
 
 
@@ -102,7 +95,8 @@ testSistema() == (
     sistema := new Sistema();
     sistema.IniciarSituacionDeRebase(auto1, auto2, auto3, carretera);
 
-    sistema.actualizar(-71.5343, -16.4014, 92, -71.54243, -16.42344, 92 , -71.531443, -16.401234, 92, 0.2);
+    sistema.actualizar(-71.5343, -16.4014, 92, -71.54243, -16.42344, 92 ,
+     -71.531443, -16.401234, 92, 0.2);
     sistema.notificar();
 
     return true;
@@ -115,33 +109,26 @@ testSituacionRebase() == (
     usuario1 := new Usuario("Juan", "Lopez", 25, 2, "123456789");
     usuario2 := new Usuario("Maria","Lopez", 30, 5, "987654321");
     usuario3 := new Usuario("Jose","Lopez", 32, 2, "987654781");
-
     -- -- Crear autos con usuarios
     auto1 := new Auto(90, <Quieto>, 2 , -71.5343, -16.4014, usuario1);
     auto2 := new Auto(80, <Acelerando>, 2, -71.5340, -16.4010, usuario2);
     auto3 := new Auto(80, <Acelerando>, 2, -71.5342, -16.4011, usuario2);
-
     -- Crear carretera
     carretera := new Carretera(<Recto>, <Doble_Via>, 90);
-
     -- Crear situaciones de rebase con los autos y la carretera adecuados
     situacionDeRebase := new SituacionDeRebase(auto1, auto2, auto3, carretera);
-    
     let 
-        avisos = situacionDeRebase.actualizarSituacion(mk_SituacionDeRebase`datosCarro(-16.34,-17.31, 92), mk_SituacionDeRebase`datosCarro(-16.34,-17.31, 92), mk_SituacionDeRebase`datosCarro(-16.34,-17.31, 92), 0.2),
+        avisos = situacionDeRebase.actualizarSituacion(mk_SituacionDeRebase`datosCarro(-16.34,-17.31, 92), 
+        mk_SituacionDeRebase`datosCarro(-16.34,-17.31, 92), mk_SituacionDeRebase`datosCarro(-16.34,-17.31, 92), 0.2),
         d1 = situacionDeRebase.ObtenerdistanciaAtrasMedio(),
         d2 = situacionDeRebase.ObtenerdistanciaAtrasFrente(),
         d3 = situacionDeRebase.ObtenerdistanciaMedioDelante(),
         t1 = situacionDeRebase.ObtenerTiempoAtrasFrente(),
         t2 = situacionDeRebase.ObtenerTiempoMedioDelante(),
         t3 = situacionDeRebase.ObtenerTiempoAtrasMedio(),
-
         carro1 = situacionDeRebase.GetCarroAtras(),
         carro2 = situacionDeRebase.GetCarroMedio(),
         carro3 = situacionDeRebase.GetCarroAdelante()
-
-
-
     in
         (
             situacionDeRebase.calcularRiesgoRebase();
