@@ -64,6 +64,7 @@ operations
     if forma = <Recto> then
       return haversine(latitud_1, longitud_1, latitud_2, lonigtud_2) * 100;
     return 0.0; 
+    -- implementar para otras formas de carreteras
 
   );
     
