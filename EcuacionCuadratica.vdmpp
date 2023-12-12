@@ -7,31 +7,26 @@ operations
   -- Calcula las raíces de la ecuación cuadrática
     public calcularRaices: real * real * real ==> EcuacionCuadratica
     calcularRaices(a, b, c) == (
-        let
+      let
         discriminante : real = b * b - 4 * a * c
-        in
-            if discriminante = 0 then 
-                raices := [-b / 2 * a]
-            elseif discriminante > 0 then 
-                raices := [(-b + MATH`sqrt(discriminante)) / (2 * a), (-b - MATH`sqrt(discriminante)) / (2 * a)]
-            else 
-                raices := [];
-            
-            return self;
+      in
+        if discriminante = 0 then 
+          raices := [-b / 2 * a]
+        elseif discriminante > 0 then 
+          raices := [(-b + MATH`sqrt(discriminante)) / (2 * a), (-b - MATH`sqrt(discriminante)) / (2 * a)]
+        else 
+          raices := [];
+        
+        return self;
     );
 
     public getPositivo: () ==> real
     getPositivo() == (
-        
-    let
-      raicesPositivas = [r | r in seq raices & r > 0]
-    in
-      return hd raicesPositivas;    
+      let
+        raicesPositivas = [r | r in seq raices & r > 0]
+      in
+        return hd raicesPositivas;    
     );
     
-    public  test : real * real * real ==> real
-    test(a,b,c) == (
-       calcularRaices(a,b,c).getPositivo()
-     
-    );
+
 end EcuacionCuadratica
