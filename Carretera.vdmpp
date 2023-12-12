@@ -62,7 +62,7 @@ operations
   getDistanciaCarretera(latitud_1, longitud_1, latitud_2, lonigtud_2) == (
     -- Implementa la lógica para calcular la distancia entre los puntos en la carretera
     if forma = <Recto> then
-      return haversine(latitud_1, longitud_1, latitud_2, lonigtud_2);
+      return haversine(latitud_1, longitud_1, latitud_2, lonigtud_2) * 100;
     return 0.0; 
 
   );
