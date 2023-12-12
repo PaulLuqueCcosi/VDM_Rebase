@@ -24,17 +24,17 @@ public static
     is not yet specified
     post abs RESULT <= 1;
 
-public static
-    tan:real -> real
-    tan(a) ==
-    is not yet specified
-    pre cos(a) <> 0;
+-- public static
+--     tan:real -> real
+--     tan(a) ==
+--     is not yet specified
+--     pre cos(a) <> 0;
 
-public static
-    cot:real -> real	
-    cot(a) ==
-    is not yet specified -- Could also be: 1/tan(r)
-    pre sin(a) <> 0;
+-- public static
+--     cot:real -> real	
+--     cot(a) ==
+--     is not yet specified -- Could also be: 1/tan(r)
+--     pre sin(a) <> 0;
 
 public static
     asin:real -> real
@@ -42,22 +42,22 @@ public static
     is not yet specified
     pre abs a <= 1;
 
-public static
-    acos:real -> real
-    acos(a) ==
-    is not yet specified
-    pre abs a <= 1;
+-- public static
+--     acos:real -> real
+--     acos(a) ==
+--     is not yet specified
+--     pre abs a <= 1;
 
-public static
-    atan:real +> real
-    atan(v) ==
-    is not yet specified;
+-- public static
+--     atan:real +> real
+--     atan(v) ==
+--     is not yet specified;
 
-public static
-    acot:real +> real
-    acot(a) ==
-    atan(1/a)
-    pre a <> 0;
+-- public static
+--     acot:real +> real
+--     acot(a) ==
+--     atan(1/a)
+--     pre a <> 0;
 
 public static
     sqrt:real -> real
@@ -72,52 +72,52 @@ public static
 
   operations
 
-public static
-    srand:int ==> ()
-    srand(a) ==
-    def - = MATH`srand2(a) in skip
-    pre a >= -1;
+-- public static
+--     srand:int ==> ()
+--     srand(a) ==
+--     def - = MATH`srand2(a) in skip
+--     pre a >= -1;
 
-public static
-    rand:int ==> int 
-    rand(a) ==
-    is not yet specified;
+-- public static
+--     rand:int ==> int 
+--     rand(a) ==
+--     is not yet specified;
 
-public static
-    srand2:int ==> int 
-    srand2(a) ==
-    is not yet specified
-    pre a >= -1
+-- public static
+--     srand2:int ==> int 
+--     srand2(a) ==
+--     is not yet specified
+--     pre a >= -1
 
   functions
 
-public static
-    exp:real +> real
-    exp(a) ==
-    is not yet specified;
+-- public static
+--     exp:real +> real
+--     exp(a) ==
+--     is not yet specified;
 
-public static
-    ln:real -> real
-    ln(a) ==
-    is not yet specified
-    pre a > 0;
+-- public static
+--     ln:real -> real
+--     ln(a) ==
+--     is not yet specified
+--     pre a > 0;
 
-public static
-    log:real -> real
-    log(a) ==
-    is not yet specified
-    pre a > 0;
+-- public static
+--     log:real -> real
+--     log(a) ==
+--     is not yet specified
+--     pre a > 0;
 
-public static
-    fac:nat -> nat1
-    fac(a) ==
-    is not yet specified
-    -- pre a < 21;
+-- public static
+--     fac:nat -> nat1
+--     fac(a) ==
+--     is not yet specified
+--     -- pre a < 21;
 
 values
 public
     pi = pi_f();
-    euler = exp(1);
+    -- euler = exp(1);
 
  
 end MATH
