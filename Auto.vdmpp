@@ -3,19 +3,17 @@ class Auto
 types
   public ubicacionRegister :: latitud  : real longitud : real;
   public estadoAceleracion = <Acelerando> | <Desacelerando> | <Quieto> | <VelocidadConstante>;
-  public etiquetaPosicion = <Carril_2> | <Carril_1_adelante> | <Carril_1_atas>;
 
 values
   umbralMinimaAcelearcion : real = 0.1;
 
 instance variables
-  aceleracion : real := 0;
-  aceleracionInstanteAnterior : real :=0 ;
-  public velocidad: real := 0;
-  velocidadInstanteAnterior: real := 0;
+  aceleracion : real := 0; -- km/h/s (como lo hace la norma)
+  aceleracionInstanteAnterior : real :=0 ; -- km/h/s
+  public velocidad: real := 0; -- km/h
+  velocidadInstanteAnterior: real := 0; -- km/h
   public estado: estadoAceleracion := <Quieto>; 
-  public etiqueta: etiquetaPosicion;
-  tamano: real := 0;
+  tamano: real := 0; -- metros
   public ubicacion: ubicacionRegister := mk_ubicacionRegister(0,0);
   usuario: Usuario;
 
@@ -25,28 +23,26 @@ inv tamano > 0;
 
 
 operations
-      -- Constructor para crear un nuevo auto con los datos proporcionados
-  public Auto: real * estadoAceleracion * etiquetaPosicion * real * real * real * Usuario==> Auto
-  Auto(velo, estadoAceleracion, etiquetaPosi, tama, lon, lat, user) ==
+  -- Constructor para crear un nuevo auto con los datos proporcionados
+  public Auto: real * estadoAceleracion * real * real * real * Usuario==> Auto
+  Auto(velo, estadoAceleracion, tama, lat, lon, user) ==
     (
       velocidad := velo;
       estado := estadoAceleracion;
-      etiqueta := etiquetaPosi;
       tamano := tama;
-      ubicacion := mk_ubicacionRegister(lon, lat);
+      ubicacion := mk_ubicacionRegister(lat, lon);
       usuario := user;
       return self;
     );
   
 
   public Auto : real * real * real==> Auto
-  Auto(velo, lon, lat) ==
+  Auto(velo, lat, lon) ==
     (
       velocidad := velo;
       estado := <Quieto>;
-      etiqueta := <Carril_2>;
       tamano := 2;
-      ubicacion := mk_ubicacionRegister(lon, lat);
+      ubicacion := mk_ubicacionRegister(lat, lon);
       usuario := new Usuario();
       return self;
     );
@@ -73,8 +69,6 @@ operations
       then setEstadoAceleracion(<Desacelerando>)
     else if aceleracion > 0
       then setEstadoAceleracion(<Acelerando>);
-    
-
     return aceleracion;
   );
 
@@ -98,17 +92,16 @@ operations
     IO`print(ubicacion.latitud);
   );
 
-  public setEstadoAceleracion : estadoAceleracion ==> ()
+  private setEstadoAceleracion : estadoAceleracion ==> ()
   setEstadoAceleracion (nuevoEstado) == (
     estado := nuevoEstado;
   );
   public notificar: (SituacionDeRebase`avisoConductorTipos) ==> ()
   notificar(aviso) == (
+    IO`print("NOTIFICACION ==> Auto de ");
+    IO`print(usuario.getNombre());
+    IO`print(" : ");
     IO`println(aviso);
   );
-  -- public test: (real) ==> real
-  -- test(nueva) == (
-  --   self.setVelocidad(nueva);
-  --   return self.calcularAceleracion(0.2);
-  -- );
+
 end Auto
