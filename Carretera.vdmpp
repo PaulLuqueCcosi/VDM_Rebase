@@ -11,6 +11,7 @@ values
 instance variables
   forma: formaCarretera;
   tipo: tipoCarretera;
+  velocidadMaximaManiobra : real;
 
 functions
 
@@ -42,11 +43,12 @@ functions
 operations
 
   -- Constructor para crear una nueva carretera con la forma y tipo proporcionados
-  public Carretera: formaCarretera * tipoCarretera ==> Carretera
-  Carretera(formaParametro, tipoParemetro) ==
+  public Carretera: formaCarretera * tipoCarretera * real==> Carretera
+  Carretera(formaParametro, tipoParemetro, velMaxima) ==
     (
       forma := formaParametro;
       tipo := tipoParemetro;
+      velocidadMaximaManiobra := velMaxima;
       return self;
     );
 
@@ -67,10 +69,40 @@ operations
     -- implementar para otras formas de carreteras
 
   );
+
+  public getVelocidadMaxima: () ==> real
+  getVelocidadMaxima () == (
+    return velocidadMaximaManiobra;
+  );
     
-  public test: real * real * real * real ==> real
-  test(lat1, lon1, lat2, lon2 ) == (
-    return self.getDistanciaPuntos(lat1, lon1, lat2, lon2);
+
+  public distanciaMinimaAdelantamiento: () ==> real
+  distanciaMinimaAdelantamiento() == (
+    if velocidadMaximaManiobra <= 30 then
+      return 200
+    else if velocidadMaximaManiobra <= 40 then
+      return 270
+    else if velocidadMaximaManiobra <= 50 then
+      return 345
+    else if velocidadMaximaManiobra <= 60 then
+      return 410
+    else if velocidadMaximaManiobra <= 70 then
+      return 485
+    else if velocidadMaximaManiobra <= 80 then
+      return 540
+    else if velocidadMaximaManiobra <= 90 then
+      return 615
+    else if velocidadMaximaManiobra <= 100 then
+      return 670
+    else if velocidadMaximaManiobra <= 110 then
+      return 730
+    else if velocidadMaximaManiobra <= 120 then
+      return 775
+    else if velocidadMaximaManiobra <= 130 then
+      return 815
+    else
+      return 1000;
+
   );
 
 end Carretera
