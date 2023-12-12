@@ -2,11 +2,15 @@ class Ecuacion
 
 instance variables
     public raices : seq of real;
+    raiz1 : real;
+    raiz2 : real;
     
 operations
   public Ecuacion: () ==> Ecuacion
   Ecuacion() == (
     raices := [];
+    raiz1 := -1;
+    raiz2 := -1;
   );
   public calcularRaices: real * real * real ==> Ecuacion
   calcularRaices(a, b, c) == (
@@ -14,9 +18,15 @@ operations
       discriminante : real = b * b - 4 * a * c
     in
       if discriminante = 0 then 
-        raices := [-b / 2 * a]
+        (raices := [-b / 2 * a];
+        raiz1 := raices(1);
+        )
       elseif discriminante > 0 then 
-        raices := [(-b + MATH`sqrt(discriminante)) / (2 * a), (-b - MATH`sqrt(discriminante)) / (2 * a)]
+        (
+          raices := [(-b + MATH`sqrt(discriminante)) / (2 * a), (-b - MATH`sqrt(discriminante)) / (2 * a)];
+          raiz1 := raices(1);
+          raiz2 := raices(2);
+        )
       else 
         raices := [];
       
@@ -25,10 +35,13 @@ operations
 
   public getPositivo: () ==> real
   getPositivo() == (
-    let
-      raicesPositivas = [r | r in seq raices & r > 0]
-    in
-      return hd raicesPositivas;    
+
+    if raiz1 > 0 then
+      return raiz1
+    elseif raiz2 > 0 then
+      return raiz2
+    else 
+      return 0; 
   );
   
 
