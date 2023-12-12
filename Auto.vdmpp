@@ -19,8 +19,8 @@ instance variables
   public ubicacion: ubicacionRegister := mk_ubicacionRegister(0,0);
   usuario: Usuario;
 
-inv ubicacion.longitud >= 0 and ubicacion.longitud <= 180;
-inv ubicacion.latitud >= 0 and ubicacion.latitud <= 90;
+inv ubicacion.longitud >= -180 and ubicacion.longitud <= 180;
+inv ubicacion.latitud >= -90 and ubicacion.latitud <= 90;
 inv tamano > 0;
 
 
@@ -85,7 +85,10 @@ operations
   setEstadoAceleracion (nuevoEstado) == (
     estado := nuevoEstado;
   );
-  
+  public notificar: (SituacionDeRebase`avisoConductorTipos) ==> ()
+  notificar(aviso) == (
+    IO`println(aviso);
+  );
   -- public test: (real) ==> real
   -- test(nueva) == (
   --   self.setVelocidad(nueva);
