@@ -1,0 +1,117 @@
+class SituacionDeRebase
+
+types
+  public avisoConductorTipos = <Muy_riesgoso> | <Riesgoso> | <Aceptado> | <Sin_riesgo>;
+  
+  public autosRegister :: autoAtras: Auto
+                              autoMedio: Auto
+                              autoFrente: Auto;
+
+  
+
+instance variables
+  autos: autosRegister;
+  terrenoCarretera: Carretera;
+  avisoAutoAtras: avisoConductorTipos;
+  avisoAutoMedio: avisoConductorTipos;
+  avisoAutoFrente: avisoConductorTipos;
+
+inv autos.autoAtras <> autos.autoMedio and autos.autoAtras <> autos.autoFrente and autos.autoMedio <> autos.autoFrente;
+-- inv ObtenerdistanciaAtrasMedio() >= 0 and ObtenerdistanciaAtrasDelante() >= 0 and ObtenerdistanciaMedioDelante() >= 0;
+operations
+
+  -- Constructor para crear una nueva situación de rebase con los autos y la carretera proporcionados
+  public SituacionDeRebase: Auto * Auto * Auto * Carretera ==> SituacionDeRebase
+  SituacionDeRebase(autoAtras, autoMedio, autoFrente, carretera) ==
+    (
+      autos := mk_autosRegister(autoAtras, autoMedio, autoFrente);
+      terrenoCarretera := carretera;
+      avisoAutoAtras := <Sin_riesgo>;
+      avisoAutoMedio := <Sin_riesgo>;
+      avisoAutoFrente := <Sin_riesgo>;
+      return self;
+    );
+
+  -- Método para obtener la distancia entre el auto de atrás y el auto del medio
+  public ObtenerdistanciaAtrasMedio: () ==> real
+  ObtenerdistanciaAtrasMedio() == (
+      let 
+        lat1 : real = autos.autoAtras.getUbicacion().latitud,
+        lon1 : real = autos.autoAtras.getUbicacion().longitud,
+        lat2 : real = autos.autoMedio.getUbicacion().latitud,
+        lon2 : real = autos.autoMedio.getUbicacion().longitud
+      in
+        return terrenoCarretera.getDistanciaCarretera(lat1, lon1, lat2, lon2);
+  );
+
+  -- Método para obtener la distancia entre el auto de atrás y el auto de adelante
+  public ObtenerdistanciaAtrasFrente: () ==> real
+  ObtenerdistanciaAtrasFrente() ==
+    let 
+      lat1 : real = autos.autoAtras.getUbicacion().latitud,
+      lon1 : real = autos.autoAtras.getUbicacion().longitud,
+      lat2 : real = autos.autoFrente.getUbicacion().latitud,
+      lon2 : real = autos.autoFrente.getUbicacion().longitud
+    in
+      return terrenoCarretera.getDistanciaCarretera(lat1, lon1, lat2, lon2);
+    
+  -- Método para obtener la distancia entre el auto del medio y el auto de adelante
+  public ObtenerdistanciaMedioDelante: () ==> real
+  ObtenerdistanciaMedioDelante() ==
+   let 
+      lat1 : real = autos.autoMedio.getUbicacion().latitud,
+      lon1 : real = autos.autoMedio.getUbicacion().longitud,
+      lat2 : real = autos.autoFrente.getUbicacion().latitud,
+      lon2 : real = autos.autoFrente.getUbicacion().longitud
+    in
+      return terrenoCarretera.getDistanciaCarretera(lat1, lon1, lat2, lon2);
+
+  -- Método para obtener el tiempo necesario para que el auto de atrás alcance al auto de adelante
+  public ObtenerTiempoAtrasDelante: () ==> real
+  ObtenerTiempoAtrasDelante() == (
+    let 
+      solve : EcuacionCuadratica = new EcuacionCuadratica()
+      
+    in
+      return solve.getPositivo(solve.calcularRaices(1,2,-15))
+      -- return 0;  -- Modificar según la lógica real
+  );
+  -- Método para obtener el tiempo necesario para que el auto del medio alcance al auto de adelante
+  public ObtenerTiempoMedioDelante: () ==> real
+  ObtenerTiempoMedioDelante() ==
+    -- Implementa la lógica para calcular el tiempo
+    return 0;  -- Modificar según la lógica real
+
+  -- Método para calcular el riesgo de colisión
+  public CalcularRiesgoDeColision: () ==> real
+  CalcularRiesgoDeColision() ==
+    -- Implementa la lógica para calcular el riesgo
+    return 0;  -- Modificar según la lógica real
+
+  -- Método para obtener información de la autopista
+  public ObtenerInformacionDeAutopista: () ==> seq of char
+  ObtenerInformacionDeAutopista() ==
+    -- Implementa la lógica para obtener información de la autopista
+    return "Información de la autopista";  -- Modificar según la lógica real
+
+  -- Método para enviar un aviso al conductor del auto proporcionado
+  public AvisoAlConductor: Auto ==> seq of char
+  AvisoAlConductor(auto) ==
+    -- Implementa la lógica para enviar un aviso al conductor
+    return "Aviso al conductor";  -- Modificar según la lógica real
+
+  -- Método para obtener el auto de atrás
+  public GetCarroAtras: () ==> Auto
+  GetCarroAtras() ==
+    return autos.autoAtras;
+
+  -- Método para obtener el auto del medio
+  public GetCarroMedio: () ==> Auto
+  GetCarroMedio() ==
+    return autos.autoMedio;
+
+  -- Método para obtener el auto de adelante
+  public GetCarroAdelante: () ==> Auto
+  GetCarroAdelante() ==
+    return autos.autoFrente;
+end SituacionDeRebase
