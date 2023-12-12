@@ -21,30 +21,6 @@ instance variables
 
 inv autos.autoAtras <> autos.autoMedio and autos.autoAtras <> autos.autoFrente and autos.autoMedio <> autos.autoFrente;
 
--- functions
---   public calcularRaices: real * real * real -> seq of real
---   calcularRaices(a, b, c) == (
---     let
---       discriminante : real = b * b - 4 * a * c
---     in
---       if discriminante = 0 then 
---         [-b / 2 * a]
---       elseif discriminante > 0 then 
---         [(-b + MATH`sqrt(discriminante)) / (2 * a), (-b - MATH`sqrt(discriminante)) / (2 * a)]
---       else 
---         []
-      
---   );
-
---   public getPositivo: seq of real -> real
---   getPositivo(raices) == (
---     let
---       raicesPositivas = [r | r in seq raices & r > 0]
---     in
---       hd raicesPositivas 
---   );
-
-
 
 operations
 
@@ -96,7 +72,7 @@ operations
 
 
 
-  private verificarVelocidad:() ==> ()
+  public verificarVelocidad:() ==> ()
   verificarVelocidad() == (
     if ObtenerTiempoAtrasFrente() < ObtenerTiempoMedioDelante() then
       (
