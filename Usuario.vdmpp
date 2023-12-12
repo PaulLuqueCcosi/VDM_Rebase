@@ -3,8 +3,8 @@ class Usuario
 instance variables
   nombres: seq of char; 
   apellidos: seq of char; 
-  edad: nat;
-  tiempoDeLicencia: nat;
+  edad: nat; -- anios
+  tiempoDeLicencia: nat; -- meses
   numCelular: seq of char;
 
 types
@@ -24,27 +24,18 @@ operations
 
   public Usuario: seq of char *  seq of char * nat * nat * seq of char ==> Usuario
   Usuario(newNombre, apellido, newEdad, newTiempoDeLicencia, newNumCelular) ==
-      (
-      nombres := newNombre;
-      apellidos := apellido;
-      edad := newEdad;
-      tiempoDeLicencia := newTiempoDeLicencia;
-      numCelular := newNumCelular;
-      return self
-      );
+  (
+    nombres := newNombre;
+    apellidos := apellido;
+    edad := newEdad;
+    tiempoDeLicencia := newTiempoDeLicencia;
+    numCelular := newNumCelular;
+    return self
+  )
+  pre edad > 0 and edad < 100;
+
   public getNombre: () ==> seq of char
-  getNombre() == return nombres;
+    getNombre() == return nombres;
 
-  public getApellido: () ==> seq of char
-  getApellido() == return apellidos;
-
-  public getEdad: () ==> nat
-  getEdad() == return edad;
-
-  public getTiempoDeLicencia: () ==> nat
-  getTiempoDeLicencia() == return tiempoDeLicencia;
-
-  public getNumCelular: () ==> seq of char
-  getNumCelular() == return numCelular;
 
 end Usuario
