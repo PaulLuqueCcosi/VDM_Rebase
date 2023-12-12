@@ -1,0 +1,35 @@
+class Ecuacion
+
+instance variables
+    public raices : seq of real;
+    
+operations
+  public Ecuacion: () ==> Ecuacion
+  Ecuacion() == (
+    raices := [];
+  );
+  public calcularRaices: real * real * real ==> Ecuacion
+  calcularRaices(a, b, c) == (
+    let
+      discriminante : real = b * b - 4 * a * c
+    in
+      if discriminante = 0 then 
+        raices := [-b / 2 * a]
+      elseif discriminante > 0 then 
+        raices := [(-b + MATH`sqrt(discriminante)) / (2 * a), (-b - MATH`sqrt(discriminante)) / (2 * a)]
+      else 
+        raices := [];
+      
+      return self;
+  );
+
+  public getPositivo: () ==> real
+  getPositivo() == (
+    let
+      raicesPositivas = [r | r in seq raices & r > 0]
+    in
+      return hd raicesPositivas;    
+  );
+  
+
+end Ecuacion

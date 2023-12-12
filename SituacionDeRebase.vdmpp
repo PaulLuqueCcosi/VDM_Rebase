@@ -8,6 +8,7 @@ types
 
   
 instance variables
+  public solve : Ecuacion;
   autos: autosRegister;
   terrenoCarretera: Carretera;
   avisoAutoAtras: avisoConductorTipos;
@@ -33,7 +34,7 @@ operations
       avisoAutoFrente := <Sin_riesgo>;
       estado := <Normal>;
       distanciaMinimaManiobra := terrenoCarretera.distanciaMinimaAdelantamiento();
-
+      solve := new Ecuacion();
       return self;
     );
   -- Método para actualizar la situación con las nuevas posiciones y velocidades de los autos
@@ -165,7 +166,6 @@ operations
       auto1 = autos.autoAtras,
       auto2 = autos.autoFrente,
 
-      solve : EcuacionCuadratica = new EcuacionCuadratica(),
       a1 = auto1.calcularAceleracion(timepoUltimaActualizacion * 1000), -- tiempo en seg.
       a2 = auto2.calcularAceleracion(timepoUltimaActualizacion * 1000),
 
@@ -197,7 +197,6 @@ operations
       auto1 = autos.autoMedio,
       auto2 = autos.autoFrente,
 
-      solve : EcuacionCuadratica = new EcuacionCuadratica(),
       a1 = auto1.calcularAceleracion(timepoUltimaActualizacion * 1000),
       a2 = auto2.calcularAceleracion(timepoUltimaActualizacion * 1000),
 
@@ -229,7 +228,6 @@ operations
       auto1 = autos.autoAtras,
       auto2 = autos.autoMedio,
 
-      solve : EcuacionCuadratica = new EcuacionCuadratica(),
       a1 = auto1.calcularAceleracion(timepoUltimaActualizacion * 1000),
       a2 = auto2.calcularAceleracion(timepoUltimaActualizacion * 1000),
 
