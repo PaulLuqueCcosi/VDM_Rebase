@@ -8,8 +8,8 @@ values
   umbralMinimaAcelearcion : real = 0.1;
 
 instance variables
-  aceleracion : real := 0; -- km/h/s (como lo hace la norma)
-  aceleracionInstanteAnterior : real :=0 ; -- km/h/s
+  aceleracion : real := 0; -- m/s2
+  aceleracionInstanteAnterior : real :=0 ; -- m/s2
   public velocidad: real := 0; -- km/h
   velocidadInstanteAnterior: real := 0; -- km/h
   public estado: estadoAceleracion := <Quieto>; 
@@ -61,7 +61,7 @@ operations
   public calcularAceleracion : real ==> real
   calcularAceleracion(intervaloTiempo) == (
     aceleracionInstanteAnterior := aceleracion;
-    aceleracion := (velocidad-velocidadInstanteAnterior)/intervaloTiempo;
+    aceleracion := ((velocidad * 5 /18) - (velocidadInstanteAnterior * 5 / 18))/intervaloTiempo;
 
     if abs(aceleracion) < umbralMinimaAcelearcion
       then setEstadoAceleracion(<VelocidadConstante>)
