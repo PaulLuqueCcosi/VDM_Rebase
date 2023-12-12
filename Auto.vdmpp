@@ -1,7 +1,7 @@
 class Auto
 
 types
-  public ubicacionRegister :: longitud : real latitud : real;
+  public ubicacionRegister :: latitud  : real longitud : real;
   public estadoAceleracion = <Acelerando> | <Desacelerando> | <Quieto> | <VelocidadConstante>;
   public etiquetaPosicion = <Carril_2> | <Carril_1_adelante> | <Carril_1_atas>;
 
@@ -38,6 +38,20 @@ operations
       return self;
     );
   
+
+  public Auto : real * real * real==> Auto
+  Auto(velo, lon, lat) ==
+    (
+      velocidad := velo;
+      estado := <Quieto>;
+      etiqueta := <Carril_2>;
+      tamano := 2;
+      ubicacion := mk_ubicacionRegister(lon, lat);
+      usuario := new Usuario();
+      return self;
+    );
+
+
   -- Actualizar velocdad
 
   public setVelocidad : real ==> ()
@@ -76,7 +90,7 @@ operations
 
   public setUbicacion : real * real ==> Auto
   setUbicacion(latitud, longitud) == (
-    ubicacion := mk_ubicacionRegister(longitud, latitud);
+    ubicacion := mk_ubicacionRegister(latitud, longitud);
     IO`print(ubicacion.latitud);
     return self;
   );
