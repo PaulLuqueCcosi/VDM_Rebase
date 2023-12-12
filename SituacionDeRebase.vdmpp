@@ -2,14 +2,11 @@ class SituacionDeRebase
 
 types
   public estadoRebase = <Normal> | <Rebase>;
-  public avisoConductorTipos = <Muy_peligroso> | <Riesgoso> | <Aceptado> | <Sin_riesgo> | <Disminuya_velocidad> | <Quieren_adelantar>;
+  public avisoConductorTipos = <Muy_peligroso> | <Riesgoso> | <Aceptado> | <Sin_riesgo> | <Quieren_adelantar>;
   public datosCarro :: latitud : real longitud : real velocidad : real;
-  public autosRegister :: autoAtras: Auto
-                              autoMedio: Auto
-                              autoFrente: Auto;
+  public autosRegister :: autoAtras: Auto autoMedio: Auto autoFrente: Auto;
 
   
-
 instance variables
   autos: autosRegister;
   terrenoCarretera: Carretera;
@@ -22,7 +19,7 @@ instance variables
   distanciaMinimaManiobra : real; -- en metros.
 
 inv autos.autoAtras <> autos.autoMedio and autos.autoAtras <> autos.autoFrente and autos.autoMedio <> autos.autoFrente;
--- inv ObtenerdistanciaAtrasMedio() >= 0 and ObtenerdistanciaAtrasDelante() >= 0 and ObtenerdistanciaMedioDelante() >= 0;
+
 operations
 
   -- Constructor para crear una nueva situación de rebase con los autos y la carretera proporcionados
@@ -66,6 +63,7 @@ operations
   calcularRiesgoRebase() == (
     -- distancia minimia
     if verificarDistanciaRecomendada() then
+      -- velocidades actuales
       verificarVelocidad();
     
   );
@@ -79,10 +77,14 @@ operations
         avisoAutoAtras := <Aceptado>; 
         avisoAutoMedio := <Quieren_adelantar>;
         avisoAutoFrente := <Quieren_adelantar>;
-        -- return true;
+      )
+    else 
+      (
+        avisoAutoAtras := <Riesgoso>; 
+        avisoAutoMedio := <Quieren_adelantar>;
+        avisoAutoFrente := <Quieren_adelantar>;
       );
     
-    -- return false;
   );
 
   private verificarDistanciaRecomendada:() ==> bool
@@ -164,11 +166,11 @@ operations
       auto2 = autos.autoFrente,
 
       solve : EcuacionCuadratica = new EcuacionCuadratica(),
-      a1 = auto1.calcularAceleracion(timepoUltimaActualizacion),
-      a2 = auto2.calcularAceleracion(timepoUltimaActualizacion),
+      a1 = auto1.calcularAceleracion(timepoUltimaActualizacion * 1000), -- tiempo en seg.
+      a2 = auto2.calcularAceleracion(timepoUltimaActualizacion * 1000),
 
-      v1 = auto1.getVelocidad(),
-      v2 = auto2.getVelocidad(),
+      v1 = auto1.getVelocidad()*5/18, -- m/s
+      v2 = auto2.getVelocidad()*5/18, -- m/s
 
       lat1 = auto1.getUbicacion().latitud,
       lon1 = auto1.getUbicacion().longitud,
@@ -196,11 +198,11 @@ operations
       auto2 = autos.autoFrente,
 
       solve : EcuacionCuadratica = new EcuacionCuadratica(),
-      a1 = auto1.calcularAceleracion(timepoUltimaActualizacion),
-      a2 = auto2.calcularAceleracion(timepoUltimaActualizacion),
+      a1 = auto1.calcularAceleracion(timepoUltimaActualizacion * 1000),
+      a2 = auto2.calcularAceleracion(timepoUltimaActualizacion * 1000),
 
-      v1 = auto1.getVelocidad(),
-      v2 = auto2.getVelocidad(),
+      v1 = auto1.getVelocidad() * 5 / 18,
+      v2 = auto2.getVelocidad() * 5 / 18,
 
       lat1 = auto1.getUbicacion().latitud,
       lon1 = auto1.getUbicacion().longitud,
@@ -228,11 +230,11 @@ operations
       auto2 = autos.autoMedio,
 
       solve : EcuacionCuadratica = new EcuacionCuadratica(),
-      a1 = auto1.calcularAceleracion(timepoUltimaActualizacion),
-      a2 = auto2.calcularAceleracion(timepoUltimaActualizacion),
+      a1 = auto1.calcularAceleracion(timepoUltimaActualizacion * 1000),
+      a2 = auto2.calcularAceleracion(timepoUltimaActualizacion * 1000),
 
-      v1 = auto1.getVelocidad(),
-      v2 = auto2.getVelocidad(),
+      v1 = auto1.getVelocidad() * 5 / 18,
+      v2 = auto2.getVelocidad() * 5 / 18,
 
       lat1 = auto1.getUbicacion().latitud,
       lon1 = auto1.getUbicacion().longitud,
