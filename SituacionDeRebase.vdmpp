@@ -2,7 +2,7 @@ class SituacionDeRebase
 
 types
   public avisoConductorTipos = <Muy_riesgoso> | <Riesgoso> | <Aceptado> | <Sin_riesgo>;
-  
+  public datosCarro :: latitud : real longitud : real velocidad : real;
   public autosRegister :: autoAtras: Auto
                               autoMedio: Auto
                               autoFrente: Auto;
@@ -15,6 +15,8 @@ instance variables
   avisoAutoAtras: avisoConductorTipos;
   avisoAutoMedio: avisoConductorTipos;
   avisoAutoFrente: avisoConductorTipos;
+  isActualizado : bool;
+  timepoUltimaActualizacion : real; -- en milisegundos.
 
 inv autos.autoAtras <> autos.autoMedio and autos.autoAtras <> autos.autoFrente and autos.autoMedio <> autos.autoFrente;
 -- inv ObtenerdistanciaAtrasMedio() >= 0 and ObtenerdistanciaAtrasDelante() >= 0 and ObtenerdistanciaMedioDelante() >= 0;
@@ -31,6 +33,24 @@ operations
       avisoAutoFrente := <Sin_riesgo>;
       return self;
     );
+  -- Método para actualizar la situación con las nuevas posiciones y velocidades de los autos
+  public actualizarSituacion : datosCarro * datosCarro * datosCarro * real ==> ()
+  actualizarSituacion(carroAtrasNuevoDato, carroMedioNuevoDato, carroFrenteNuevoDato, tiempoTranscurrido) ==
+    (
+      autos.autoAtras.setUbicacion(carroAtrasNuevoDato.latitud, carroAtrasNuevoDato.longitud);
+      autos.autoAtras.setVelocidad(carroAtrasNuevoDato.velocidad);
+      
+      autos.autoMedio.setUbicacion(carroMedioNuevoDato.latitud, carroMedioNuevoDato.longitud);
+      autos.autoMedio.setVelocidad(carroMedioNuevoDato.velocidad);
+
+      autos.autoFrente.setUbicacion(carroFrenteNuevoDato.latitud, carroFrenteNuevoDato.longitud);
+      autos.autoFrente.setVelocidad(carroFrenteNuevoDato.velocidad);
+
+      timepoUltimaActualizacion := tiempoTranscurrido;
+      isActualizado := true;
+      
+    );
+
 
   -- Método para obtener la distancia entre el auto de atrás y el auto del medio
   public ObtenerdistanciaAtrasMedio: () ==> real
@@ -41,7 +61,7 @@ operations
         lat2 : real = autos.autoMedio.getUbicacion().latitud,
         lon2 : real = autos.autoMedio.getUbicacion().longitud
       in
-        return terrenoCarretera.getDistanciaCarretera(lat1, lon1, lat2, lon2);
+        return terrenoCarretera.getDistanciaPuntos(lat1, lon1, lat2, lon2);
   );
 
   -- Método para obtener la distancia entre el auto de atrás y el auto de adelante
@@ -53,7 +73,7 @@ operations
       lat2 : real = autos.autoFrente.getUbicacion().latitud,
       lon2 : real = autos.autoFrente.getUbicacion().longitud
     in
-      return terrenoCarretera.getDistanciaCarretera(lat1, lon1, lat2, lon2);
+      return terrenoCarretera.getDistanciaPuntos(lat1, lon1, lat2, lon2);
     
   -- Método para obtener la distancia entre el auto del medio y el auto de adelante
   public ObtenerdistanciaMedioDelante: () ==> real
@@ -64,18 +84,37 @@ operations
       lat2 : real = autos.autoFrente.getUbicacion().latitud,
       lon2 : real = autos.autoFrente.getUbicacion().longitud
     in
-      return terrenoCarretera.getDistanciaCarretera(lat1, lon1, lat2, lon2);
+      return terrenoCarretera.getDistanciaPuntos(lat1, lon1, lat2, lon2);
 
   -- Método para obtener el tiempo necesario para que el auto de atrás alcance al auto de adelante
   public ObtenerTiempoAtrasDelante: () ==> real
   ObtenerTiempoAtrasDelante() == (
     let 
-      solve : EcuacionCuadratica = new EcuacionCuadratica()
-      
+      solve : EcuacionCuadratica = new EcuacionCuadratica(),
+      a1 = autos.autoAtras.calcularAceleracion(timepoUltimaActualizacion),
+      a2 = autos.autoFrente.calcularAceleracion(timepoUltimaActualizacion),
+
+      v1 = autos.autoAtras.getVelocidad(),
+      v2 = autos.autoFrente.getVelocidad(),
+
+      lat1 = autos.autoAtras.getUbicacion().latitud,
+      lon1 = autos.autoAtras.getUbicacion().longitud,
+      lat2 = autos.autoFrente.getUbicacion().latitud,
+      lon2 = autos.autoFrente.getUbicacion().longitud,
+
+      d = terrenoCarretera.getDistanciaPuntos(lat1,lon1,lat2, lon2),
+
+      a = (a1 + a2) /2,
+      b = v1 + v2,
+      c = -d
+
     in
-      return solve.getPositivo(solve.calcularRaices(1,2,-15))
+
+      return solve.calcularRaices(a, b, c).getPositivo();
       -- return 0;  -- Modificar según la lógica real
-  );
+  )
+  pre isActualizado = true;
+  
   -- Método para obtener el tiempo necesario para que el auto del medio alcance al auto de adelante
   public ObtenerTiempoMedioDelante: () ==> real
   ObtenerTiempoMedioDelante() ==
@@ -88,11 +127,6 @@ operations
     -- Implementa la lógica para calcular el riesgo
     return 0;  -- Modificar según la lógica real
 
-  -- Método para obtener información de la autopista
-  public ObtenerInformacionDeAutopista: () ==> seq of char
-  ObtenerInformacionDeAutopista() ==
-    -- Implementa la lógica para obtener información de la autopista
-    return "Información de la autopista";  -- Modificar según la lógica real
 
   -- Método para enviar un aviso al conductor del auto proporcionado
   public AvisoAlConductor: Auto ==> seq of char
