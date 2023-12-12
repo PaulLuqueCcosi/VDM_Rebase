@@ -11,7 +11,7 @@ values
 instance variables
   aceleracion : real := 0;
   aceleracionInstanteAnterior : real :=0 ;
-  velocidad: real := 0;
+  public velocidad: real := 0;
   velocidadInstanteAnterior: real := 0;
   public estado: estadoAceleracion := <Quieto>; 
   public etiqueta: etiquetaPosicion;
@@ -87,6 +87,10 @@ operations
   public getUbicacion: () ==> ubicacionRegister
   getUbicacion() ==
     return ubicacion;
+
+  public getVelocidad: () ==> real
+  getVelocidad() == 
+    return velocidad;
 
   public setUbicacion : real * real ==> ()
   setUbicacion(latitud, longitud) == (
