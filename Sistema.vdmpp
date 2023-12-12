@@ -1,0 +1,38 @@
+class Sistema
+
+
+instance variables
+  situacion: SituacionDeRebase;
+  resultados : seq of SituacionDeRebase`avisoConductorTipos;
+  iniciado : bool;
+
+operations
+
+public Sistema: () ==> Sistema
+  Sistema() == (
+    resultados := [];
+    
+  );
+  -- Método para iniciar una nueva situación de rebase
+  public IniciarSituacionDeRebase: Auto * Auto * Auto * Carretera ==> ()
+  IniciarSituacionDeRebase(autoAtras, autoMedio, autoDelante, carretera) ==
+    situacion := new SituacionDeRebase(autoAtras, autoMedio, autoDelante, carretera);
+
+  public actualizar: real * real * real * real * real * real * real * real * real * real ==> ()
+  actualizar(lat1, lon1, vel1, lat2, lon2, vel2, lat3, lon3, vel3, tiempo) == (
+    let
+      datoCarroAtras = mk_SituacionDeRebase`datosCarro(lat1, lon1, vel1),
+      datoCarroMedio = mk_SituacionDeRebase`datosCarro(lat2, lon2, vel2),
+      datoCarroFrente = mk_SituacionDeRebase`datosCarro(lat3, lon3, vel3)
+    in 
+      resultados := situacion.actualizarSituacion(datoCarroAtras, datoCarroMedio, datoCarroFrente, tiempo);
+      notificar();
+  ) pre iniciado = true;
+
+  public notificar:() ==> ()
+  notificar() == (
+    situacion.GetCarroAtras().notificar(resultados(1));
+    situacion.GetCarroMedio().notificar(resultados(2));
+    situacion.GetCarroAdelante().notificar(resultados(3));
+  ) pre iniciado;
+end Sistema
