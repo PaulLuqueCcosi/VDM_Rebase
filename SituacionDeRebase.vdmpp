@@ -87,23 +87,27 @@ operations
       return terrenoCarretera.getDistanciaPuntos(lat1, lon1, lat2, lon2);
 
   -- Método para obtener el tiempo necesario para que el auto de atrás alcance al auto de adelante
-  public ObtenerTiempoAtrasDelante: () ==> real
-  ObtenerTiempoAtrasDelante() == (
+  public ObtenerTiempoAtrasFrente: () ==> real
+  ObtenerTiempoAtrasFrente() == (
     let 
+      auto1 = autos.autoAtras,
+      auto2 = autos.autoFrente,
+
       solve : EcuacionCuadratica = new EcuacionCuadratica(),
-      a1 = autos.autoAtras.calcularAceleracion(timepoUltimaActualizacion),
-      a2 = autos.autoFrente.calcularAceleracion(timepoUltimaActualizacion),
+      a1 = auto1.calcularAceleracion(timepoUltimaActualizacion),
+      a2 = auto2.calcularAceleracion(timepoUltimaActualizacion),
 
-      v1 = autos.autoAtras.getVelocidad(),
-      v2 = autos.autoFrente.getVelocidad(),
+      v1 = auto1.getVelocidad(),
+      v2 = auto2.getVelocidad(),
 
-      lat1 = autos.autoAtras.getUbicacion().latitud,
-      lon1 = autos.autoAtras.getUbicacion().longitud,
-      lat2 = autos.autoFrente.getUbicacion().latitud,
-      lon2 = autos.autoFrente.getUbicacion().longitud,
+      lat1 = auto1.getUbicacion().latitud,
+      lon1 = auto1.getUbicacion().longitud,
+      lat2 = auto2.getUbicacion().latitud,
+      lon2 = auto2.getUbicacion().longitud,
 
       d = terrenoCarretera.getDistanciaPuntos(lat1,lon1,lat2, lon2),
 
+      -- valores para resolver la ecu.
       a = (a1 + a2) /2,
       b = v1 + v2,
       c = -d
@@ -111,15 +115,72 @@ operations
     in
 
       return solve.calcularRaices(a, b, c).getPositivo();
-      -- return 0;  -- Modificar según la lógica real
   )
   pre isActualizado = true;
   
   -- Método para obtener el tiempo necesario para que el auto del medio alcance al auto de adelante
   public ObtenerTiempoMedioDelante: () ==> real
-  ObtenerTiempoMedioDelante() ==
-    -- Implementa la lógica para calcular el tiempo
-    return 0;  -- Modificar según la lógica real
+  ObtenerTiempoMedioDelante() == (
+    let 
+      auto1 = autos.autoMedio,
+      auto2 = autos.autoFrente,
+
+      solve : EcuacionCuadratica = new EcuacionCuadratica(),
+      a1 = auto1.calcularAceleracion(timepoUltimaActualizacion),
+      a2 = auto2.calcularAceleracion(timepoUltimaActualizacion),
+
+      v1 = auto1.getVelocidad(),
+      v2 = auto2.getVelocidad(),
+
+      lat1 = auto1.getUbicacion().latitud,
+      lon1 = auto1.getUbicacion().longitud,
+      lat2 = auto2.getUbicacion().latitud,
+      lon2 = auto2.getUbicacion().longitud,
+
+      d = terrenoCarretera.getDistanciaPuntos(lat1,lon1,lat2, lon2),
+
+      -- valores para resolver la ecu.
+      a = (a1 + a2) /2,
+      b = v1 + v2,
+      c = -d
+
+    in
+
+      return solve.calcularRaices(a, b, c).getPositivo();
+  )
+  pre isActualizado = true;
+
+ -- Método para obtener el tiempo necesario para que el auto del medio alcance al auto de adelante
+  public ObtenerTiempoAtrasMedio: () ==> real
+  ObtenerTiempoAtrasMedio() == (
+    let 
+      auto1 = autos.autoAtras,
+      auto2 = autos.autoMedio,
+
+      solve : EcuacionCuadratica = new EcuacionCuadratica(),
+      a1 = auto1.calcularAceleracion(timepoUltimaActualizacion),
+      a2 = auto2.calcularAceleracion(timepoUltimaActualizacion),
+
+      v1 = auto1.getVelocidad(),
+      v2 = auto2.getVelocidad(),
+
+      lat1 = auto1.getUbicacion().latitud,
+      lon1 = auto1.getUbicacion().longitud,
+      lat2 = auto2.getUbicacion().latitud,
+      lon2 = auto2.getUbicacion().longitud,
+
+      d = terrenoCarretera.getDistanciaPuntos(lat1,lon1,lat2, lon2),
+
+      -- valores para resolver la ecu.
+      a = (a1 - a2) /2,
+      b = v1 - v2,
+      c = -d
+
+    in
+
+      return solve.calcularRaices(a, b, c).getPositivo();
+  )
+  pre isActualizado = true;
 
   -- Método para calcular el riesgo de colisión
   public CalcularRiesgoDeColision: () ==> real
