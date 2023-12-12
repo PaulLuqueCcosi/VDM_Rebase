@@ -1,0 +1,111 @@
+class Test
+
+types
+  public ubicacionRegister :: longitud : real
+                        latitud : real;
+instance variables
+
+    usuario : Usuario;
+    usuario1 : Usuario;
+    usuario2 : Usuario;
+    usuario3 : Usuario;
+    auto : Auto;
+    auto1 : Auto;
+    auto2 : Auto;
+    auto3 : Auto;
+    carretera : Carretera;
+    situacionDeRebase : SituacionDeRebase;
+    sistema : Sistema;
+
+
+
+operations
+    public run: () ==> bool
+    run () == test();
+
+    public test: () ==> bool
+    test() == (
+        return usuarioTest() and autoTest() and testCarretera()  and testSituacionRebase() and testSistema() ;
+    );
+
+    public usuarioTest: () ==> bool
+    usuarioTest() == (
+        usuario := new Usuario("Juan", "Lopez", 25, 2, "123456789");
+        return usuario.getNombre() = "Juan" ;
+    );
+
+-- Método para probar la clase Auto
+    public autoTest: () ==> bool
+    autoTest() == (
+        -- auto := new Auto(90,<Quieto>, 4.5, 0.2,-71.5343, -16.4014 , usuario);
+        return auto.getEstado() = <Quieto> and auto.getUbicacion().longitud = -71.5343 and auto.getUbicacion().latitud = -16.4014;
+    );
+
+    -- Método para probar la clase Carretera
+    public testCarretera: () ==> bool
+    testCarretera() == (
+        carretera := new Carretera(<Recto>, <Doble_Via>, 90);
+        return  carretera.getDistanciaPuntos(-71.5343, -16.4014, -71.5243, -16.4124) = 0; 
+    );
+
+
+-- Método para probar la clase Sistema
+public testSistema: () ==> bool
+testSistema() == (
+    sistema := new Sistema();
+
+    -- Crear usuarios
+    usuario1 := new Usuario("Juan", "Lopez",  25, 2, "123456789");
+    usuario2 := new Usuario("Maria", "Lopez", 30, 5, "987654321");
+    usuario3 := new Usuario("Jose","Lopez",  32, 2, "987654781");
+
+    -- Crear autos con usuarios
+    -- auto1 := new Auto(90, <Quieto>, 4.5, 0.2, -71.5343, -16.4014, usuario1);
+    -- auto2 := new Auto(80, <Acelerando>, 4.0, 0.1, -71.5340, -16.4010, usuario2);
+    -- auto3 := new Auto(80, <Acelerando>, 4.0, 0.1, -71.5342, -16.4011, usuario2);
+
+    -- Crear carretera
+    carretera := new Carretera(<Recto>, <Doble_Via>, 90);
+
+    -- Iniciar situaciones de rebase en el sistema
+    sistema.IniciarSituacionDeRebase(auto1, auto2, auto3, carretera);
+    sistema.IniciarSituacionDeRebase(auto2, auto3, auto1, carretera);
+    sistema.IniciarSituacionDeRebase(auto3, auto1, auto2, carretera);
+
+
+    return true;
+);
+
+-- Método para probar la clase SituacionDeRebase
+public testSituacionRebase: () ==> bool
+testSituacionRebase() == (
+    -- Crear usuarios
+    usuario1 := new Usuario("Juan", "Lopez", 25, 2, "123456789");
+    usuario2 := new Usuario("Maria","Lopez", 30, 5, "987654321");
+    usuario3 := new Usuario("Jose","Lopez", 32, 2, "987654781");
+
+    -- -- Crear autos con usuarios
+    -- auto1 := new Auto(90, <Quieto>, 4.5, 0.2, -71.5343, -16.4014, usuario1);
+    -- auto2 := new Auto(80, <Acelerando>, 4.0, 0.1, -71.5340, -16.4010, usuario2);
+    -- auto3 := new Auto(80, <Acelerando>, 4.0, 0.1, -71.5342, -16.4011, usuario2);
+
+    -- Crear carretera
+    carretera := new Carretera(<Recto>, <Doble_Via>, 90);
+
+    -- Crear situaciones de rebase con los autos y la carretera adecuados
+    situacionDeRebase := new SituacionDeRebase(auto1, auto2, auto3, carretera);
+
+    -- Puedes agregar más pruebas según sea necesario
+    return situacionDeRebase.ObtenerdistanciaAtrasMedio() = 0 and
+           situacionDeRebase.ObtenerdistanciaAtrasFrente() = 0 and
+           situacionDeRebase.ObtenerdistanciaMedioDelante() = 0 and
+           situacionDeRebase.ObtenerTiempoAtrasFrente() = 0 and
+           situacionDeRebase.ObtenerTiempoMedioDelante() = 0 and
+        --    situacionDeRebase.CalcularRiesgoDeColision() = 0 and
+        --    situacionDeRebase.AvisoAlConductor(auto1) = "Aviso al conductor" and
+            situacionDeRebase.GetCarroAtras() = auto1 and
+           situacionDeRebase.GetCarroMedio() = auto2 and
+           situacionDeRebase.GetCarroAdelante() = auto3;
+);
+
+    end Test

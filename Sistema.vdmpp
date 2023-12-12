@@ -15,8 +15,10 @@ public Sistema: () ==> Sistema
   );
   -- Método para iniciar una nueva situación de rebase
   public IniciarSituacionDeRebase: Auto * Auto * Auto * Carretera ==> ()
-  IniciarSituacionDeRebase(autoAtras, autoMedio, autoDelante, carretera) ==
+  IniciarSituacionDeRebase(autoAtras, autoMedio, autoDelante, carretera) == (
     situacion := new SituacionDeRebase(autoAtras, autoMedio, autoDelante, carretera);
+    iniciado := true;
+  );
 
   public actualizar: real * real * real * real * real * real * real * real * real * real ==> ()
   actualizar(lat1, lon1, vel1, lat2, lon2, vel2, lat3, lon3, vel3, tiempo) == (
