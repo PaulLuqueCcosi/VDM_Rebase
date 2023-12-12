@@ -58,8 +58,8 @@ operations
     return 0;  -- Modificar según la lógica real
 
   -- Método para obtener la distancia entre dos puntos en la carretera
-  public getDistanciaCarretera: real * real * real * real ==> real
-  getDistanciaCarretera(latitud_1, longitud_1, latitud_2, lonigtud_2) == (
+  public getDistanciaPuntos: real * real * real * real ==> real
+  getDistanciaPuntos(latitud_1, longitud_1, latitud_2, lonigtud_2) == (
     -- Implementa la lógica para calcular la distancia entre los puntos en la carretera
     if forma = <Recto> then
       return haversine(latitud_1, longitud_1, latitud_2, lonigtud_2) * 100;
@@ -69,7 +69,7 @@ operations
     
   public test: real * real * real * real ==> real
   test(lat1, lon1, lat2, lon2 ) == (
-    return self.getDistanciaCarretera(lat1, lon1, lat2, lon2);
+    return self.getDistanciaPuntos(lat1, lon1, lat2, lon2);
   );
 
 end Carretera
