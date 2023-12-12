@@ -1,0 +1,32 @@
+class EcuacionCuadratica
+
+operations
+
+  -- Calcula las raíces de la ecuación cuadrática
+  public calcularRaices: real * real * real ==> seq of real
+  calcularRaices(a, b, c) == (
+    let
+      discriminante : real = b * b - 4 * a * c
+    in
+        if discriminante = 0 then 
+            return [-b / 2 * a]
+        elseif discriminante > 0 then 
+            return [(-b + MATH`sqrt(discriminante)) / (2 * a), (-b - MATH`sqrt(discriminante)) / (2 * a)]
+        else 
+            return []
+  );
+
+    public getPositivo: seq of real ==> real
+    getPositivo(raices) == (
+        
+    let
+      raicesPositivas = [r | r in seq raices & r > 0]
+    in
+      return hd raicesPositivas;    
+    );
+
+    public  test : real * real * real ==> real
+    test(a,b,c) == (
+        self.getPositivo(self.calcularRaices(a,b,c))
+    );
+end EcuacionCuadratica
