@@ -32,7 +32,7 @@ operations
     numCelular := newNumCelular;
     return self
   )
-  pre edad > 0 and edad < 100;
+  pre newEdad > 0 and newEdad < 100;
 
   public getNombre: () ==> seq of char
     getNombre() == return nombres;
