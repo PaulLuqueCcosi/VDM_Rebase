@@ -88,11 +88,10 @@ operations
   getUbicacion() ==
     return ubicacion;
 
-  public setUbicacion : real * real ==> Auto
+  public setUbicacion : real * real ==> ()
   setUbicacion(latitud, longitud) == (
     ubicacion := mk_ubicacionRegister(latitud, longitud);
     IO`print(ubicacion.latitud);
-    return self;
   );
 
   public setEstadoAceleracion : estadoAceleracion ==> ()
