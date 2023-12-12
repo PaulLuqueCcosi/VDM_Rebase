@@ -8,12 +8,13 @@ values
   umbralMinimaAcelearcion : real = 0.1;
 
 instance variables
+  public notificacionActual : SituacionDeRebase`avisoConductorTipos;
   aceleracion : real := 0; -- m/s2
   aceleracionInstanteAnterior : real :=0 ; -- m/s2
   public velocidad: real := 0; -- km/h
   velocidadInstanteAnterior: real := 0; -- km/h
   public estado: estadoAceleracion := <Quieto>; 
-  tamano: real := 0; -- metros
+  tamano: real := 0.1; -- metros
   public ubicacion: ubicacionRegister := mk_ubicacionRegister(0,0);
   usuario: Usuario;
 
@@ -89,7 +90,7 @@ operations
   public setUbicacion : real * real ==> ()
   setUbicacion(latitud, longitud) == (
     ubicacion := mk_ubicacionRegister(latitud, longitud);
-    IO`print(ubicacion.latitud);
+    -- IO`print(ubicacion.latitud);
   );
 
   private setEstadoAceleracion : estadoAceleracion ==> ()
@@ -97,11 +98,9 @@ operations
     estado := nuevoEstado;
   );
   public notificar: (SituacionDeRebase`avisoConductorTipos) ==> ()
-  notificar(aviso) == (
-    IO`print("NOTIFICACION ==> Auto de ");
-    IO`print(usuario.getNombre());
-    IO`print(" : ");
-    IO`println(aviso);
-  );
+  notificar(aviso) == 
+    notificacionActual := aviso
+  ;
+  
 
 end Auto
