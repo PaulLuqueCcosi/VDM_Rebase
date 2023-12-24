@@ -17,6 +17,7 @@ instance variables
     situacionDeRebase : SituacionDeRebase;
     sistema : Sistema;
 
+    ace3 : real;
 
 
 operations
@@ -43,13 +44,21 @@ operations
             vel = auto.getVelocidad(),
             esta = auto.getEstado(),
             ubi = auto.getUbicacion(),
-            -- auto.setVelocidad(92),
-            ace = auto.calcularAceleracion(0.2)
+            ace = auto.calcularAceleracion(0.2),
+            ace2 = auto.calcularAceleracion(2)
+            -- ace3 = 4
+            
+            -- auto3 = new Auto(90 ,<Quieto>, 2,-16.4014 , -71.5343 , usuario),
+            -- auto3
+
         in 
             (
                 auto.setVelocidad(92);
                 auto.setUbicacion(-16.4015, -17.5352);
                 auto.notificar(<Riesgoso>);
+                auto.setVelocidad(80);
+                ace3 := auto.calcularAceleracion(10);
+            
                 return true;
             );
 
