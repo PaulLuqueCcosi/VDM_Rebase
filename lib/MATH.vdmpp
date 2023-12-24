@@ -65,10 +65,10 @@ public static
     is not yet specified
     pre a >= 0;
 
-public static
-    pi_f:() +> real
-    pi_f () ==
-    is not yet specified
+-- public static
+--     pi_f:() +> real
+--     pi_f () ==
+--     is not yet specified
 
   operations
 
@@ -113,11 +113,6 @@ public static
 --     fac(a) ==
 --     is not yet specified
 --     -- pre a < 21;
-
-values
-public
-    pi = pi_f();
-    -- euler = exp(1);
 
  
 end MATH

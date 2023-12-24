@@ -6,6 +6,7 @@ types
 
 values
   public radioTierraKm : real = 6371.0; -- km
+  public pi : real = 3.14159 -- pi
 
 instance variables
   forma: formaCarretera;
@@ -23,7 +24,7 @@ functions
 
   private toRadians: real +> real
       toRadians(degree) ==
-        degree * (MATH`pi / 180.0);
+        degree * (pi / 180.0);
 
   private haversine: real * real * real * real -> real
     haversine(lat1, lon1, lat2, lon2) == 
