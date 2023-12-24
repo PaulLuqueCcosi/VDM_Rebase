@@ -1,10 +1,22 @@
 class Ecuacion
 
 instance variables
-    public raices : seq of real;
+    public raices : seq of real := [];
     raiz1 : real;
     raiz2 : real;
     
+functions  
+  public getPositivo :  (seq of real) -> real
+  getPositivo (raices) == 
+  (
+     if raices(1) >= 0 then
+      raices(1)
+    else 
+      raices(2)
+  )pre len raices = 2 and (raices(1) >= 0 or raices(2) >= 0);
+
+
+  
 operations
   public Ecuacion: () ==> Ecuacion
   Ecuacion() == (
@@ -12,7 +24,7 @@ operations
     raiz1 := -1;
     raiz2 := -1;
   );
-  public calcularRaices: real * real * real ==> Ecuacion
+  public calcularRaices: real * real * real ==> seq of real
   calcularRaices(a, b, c) == (
     let
       discriminante : real = b * b - 4 * a * c
@@ -30,19 +42,8 @@ operations
       else 
         raices := [];
       
-      return self;
+      return raices;
   );
 
-  public getPositivo: () ==> real
-  getPositivo() == (
-
-    if raiz1 > 0 then
-      return raiz1
-    elseif raiz2 > 0 then
-      return raiz2
-    else 
-      return 0; 
-  );
-  
 
 end Ecuacion

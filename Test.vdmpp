@@ -16,8 +16,11 @@ instance variables
     carretera : Carretera;
     situacionDeRebase : SituacionDeRebase;
     sistema : Sistema;
+    ecuacion : Ecuacion;
 
     ace3 : real;
+    num1 : real;
+    num2: real;
 
 
 operations
@@ -26,7 +29,7 @@ operations
 
     public test: () ==> bool
     test() == (
-        return usuarioTest() and autoTest() and testCarretera() and testSistema() and testSituacionRebase() ;
+        return usuarioTest() and autoTest() and testCarretera() and testSistema() and testSituacionRebase() and testEcuacion() ;
     );
 
     public usuarioTest: () ==> bool
@@ -119,16 +122,16 @@ testSituacionRebase() == (
     usuario2 := new Usuario("Maria","Lopez", 30, 5, "987654321");
     usuario3 := new Usuario("Jose","Lopez", 32, 2, "987654781");
     -- -- Crear autos con usuarios
-    auto1 := new Auto(90, <Quieto>, 2 , -71.5343, -16.4014, usuario1);
-    auto2 := new Auto(80, <Acelerando>, 2, -71.5340, -16.4010, usuario2);
-    auto3 := new Auto(80, <Acelerando>, 2, -71.5342, -16.4011, usuario2);
+    auto1 := new Auto(90, <Quieto>, 2 ,-15.402122, -70.094390 , usuario1);
+    auto2 := new Auto(80, <Acelerando>, 2, -15.396969,-70.092890, usuario2);
+    auto3 := new Auto(80, <Acelerando>, 2,  -15.380966, -70.088203, usuario2);
     -- Crear carretera
     carretera := new Carretera(<Recto>, <Doble_Via>, 90);
     -- Crear situaciones de rebase con los autos y la carretera adecuados
     situacionDeRebase := new SituacionDeRebase(auto1, auto2, auto3, carretera);
     let 
-        avisos = situacionDeRebase.actualizarSituacion(mk_SituacionDeRebase`datosCarro(-16.34,-17.31, 92), 
-        mk_SituacionDeRebase`datosCarro(-16.34,-17.31, 92), mk_SituacionDeRebase`datosCarro(-16.34,-17.31, 92), 0.2),
+        avisos = situacionDeRebase.actualizarSituacion(mk_SituacionDeRebase`datosCarro(-15.400845, -70.093876, 92), 
+        mk_SituacionDeRebase`datosCarro(-15.398683, -70.093359, 90), mk_SituacionDeRebase`datosCarro(-15.391781, -70.091203, 75), 0.2),
         d1 = situacionDeRebase.ObtenerdistanciaAtrasMedio(),
         d2 = situacionDeRebase.ObtenerdistanciaAtrasFrente(),
         d3 = situacionDeRebase.ObtenerdistanciaMedioDelante(),
@@ -145,5 +148,21 @@ testSituacionRebase() == (
             return true;
         );
 );
+
+-- Método para probar la clase Ecuacion
+public testEcuacion: () ==> bool
+testEcuacion() == (
+    -- Crear una instancia de la clase Ecuacion
+    ecuacion := new Ecuacion();
+    num1 := ecuacion.getPositivo(ecuacion.calcularRaices(1, 0, -1));
+    num2 := ecuacion.getPositivo(ecuacion.calcularRaices(2, -5, -3));
+    
+    -- ecuacion.raices := [1.0, -2.0];
+    -- ecuacion.getPositivo(ecuacion.raices);
+
+    return true;
+);
+
+
 
     end Test

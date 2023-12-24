@@ -187,7 +187,7 @@ operations
 
     in
 
-      return solve.calcularRaices(a, b, c).getPositivo();
+      return solve.getPositivo(solve.calcularRaices(a, b, c));
   )
   pre isActualizado = true;
   
@@ -218,7 +218,7 @@ operations
 
     in
 
-      return solve.calcularRaices(a, b, c).getPositivo();
+      return solve.getPositivo(solve.calcularRaices(a, b, c));
   )
   pre isActualizado = true;
 
@@ -240,16 +240,16 @@ operations
       lat2 = auto2.getUbicacion().latitud,
       lon2 = auto2.getUbicacion().longitud,
 
-      d = terrenoCarretera.getDistanciaPuntos(lat1,lon1,lat2, lon2),
+      d = terrenoCarretera.getDistanciaPuntos(lat2,lon2,lat1, lon1),
 
       -- valores para resolver la ecu.
-      a = (a1 - a2) /2,
-      b = v1 - v2,
+      a = (a2 - a1) /2,
+      b = v2 - v1,
       c = -d
 
     in
 
-      return solve.calcularRaices(a, b, c).getPositivo();
+      return solve.getPositivo(solve.calcularRaices(a, b, c));
   )
   pre isActualizado = true;
 
