@@ -18,6 +18,7 @@ instance variables
   timepoUltimaActualizacion : real; -- en milisegundos.
   estado : estadoRebase;
   distanciaMinimaManiobra : real; -- en metros.
+  primerCalculoRealizado : bool;
 
 inv autos.autoAtras <> autos.autoMedio and autos.autoAtras <> autos.autoFrente and autos.autoMedio <> autos.autoFrente;
 
@@ -36,6 +37,7 @@ operations
       estado := <Normal>;
       distanciaMinimaManiobra := terrenoCarretera.distanciaMinimaAdelantamiento();
       solve := new Ecuacion();
+      primerCalculoRealizado := false;
       return self;
     );
   -- Método para actualizar la situación con las nuevas posiciones y velocidades de los autos
@@ -49,12 +51,12 @@ operations
       timepoUltimaActualizacion := tiempoTranscurrido;
       isActualizado := true;
 
-      -- -- si esatamos en rebase
-      -- if isEnRebase() then
-      --   estado := <Rebase>;
+      -- si esatamos en rebase
+      if isEnRebase() then
+        estado := <Rebase>;
       
-      -- if estado = <Rebase> then
-      calcularRiesgoRebase();
+      if estado = <Rebase> then
+        calcularRiesgoRebase();
       
 
       return [avisoAutoAtras, avisoAutoMedio, avisoAutoFrente];
@@ -91,27 +93,32 @@ operations
 
   private verificarDistanciaRecomendada:() ==> bool
   verificarDistanciaRecomendada() == (
-    if ObtenerdistanciaAtrasFrente() < distanciaMinimaManiobra then 
+    if not primerCalculoRealizado and ObtenerdistanciaAtrasFrente() < distanciaMinimaManiobra then 
       (
         avisoAutoAtras := <Muy_peligroso>; 
         avisoAutoMedio := <Quieren_adelantar>;
         avisoAutoFrente := <Quieren_adelantar>;
+        primerCalculoRealizado := true;
         return false;
       ) 
     else 
+      primerCalculoRealizado := true;
       return true;
   );
 
-  -- private isEnRebase:() ==> bool
-  -- isEnRebase() == (
-  --   if estado = <Rebase> 
-  --     then  return true
-  --   elseif  diferenciaVelocidades(autos.autoAtras, autos.autoMedio) >= 15
-  --     then return true
-  --   else 
-  --     return false; 
+  private isEnRebase:() ==> bool
+  isEnRebase() == (
+    let 
+      acel = autos.autoAtras.calcularAceleracion(timepoUltimaActualizacion)
+    in if estado = <Rebase> 
+      then  return true
+    elseif  autos.autoAtras.getEsatadoAceleracion() = <Acelerando>
+      then return true
+    else 
+      return false; 
 
-  -- );
+  ) pre isActualizado = true;
+
 
 
   private actualizarDatosAuto: datosCarro * Auto ==> ()

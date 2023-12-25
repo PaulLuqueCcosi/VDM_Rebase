@@ -5,7 +5,7 @@ types
   public estadoAceleracion = <Acelerando> | <Desacelerando> | <Quieto> | <VelocidadConstante>;
 
 values
-  umbralMinimaAcelearcion : real = 0.1;
+  umbralMinimaAcelearcion : real = 0.01;
 
 instance variables
   public notificacionActual : SituacionDeRebase`avisoConductorTipos;
@@ -86,6 +86,10 @@ operations
   public getVelocidad: () ==> real
   getVelocidad() == 
     return velocidad;
+
+  public getEsatadoAceleracion: () ==> estadoAceleracion
+  getEsatadoAceleracion() == 
+    return estado;
 
   public setUbicacion : real * real ==> ()
   setUbicacion(latitud, longitud) == (

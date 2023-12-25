@@ -164,6 +164,8 @@ testSituacionRebase() == (
     -- Crear situaciones de rebase con los autos y la carretera adecuados
     situacionDeRebase := new SituacionDeRebase(auto1, auto2, auto3, carretera);
     let 
+        avisos0 = situacionDeRebase.actualizarSituacion(mk_SituacionDeRebase`datosCarro(-15.401892, -70.094202, 92), mk_SituacionDeRebase`datosCarro(-15.396256, -70.092593,81), mk_SituacionDeRebase`datosCarro(-15.383524, -70.089113, 74), 0.2),
+        
         avisos = situacionDeRebase.actualizarSituacion(mk_SituacionDeRebase`datosCarro(-15.400845, -70.093876, 92), mk_SituacionDeRebase`datosCarro(-15.396256, -70.092593,80), mk_SituacionDeRebase`datosCarro(-15.383524, -70.089113, 75), 0.2),
         d1 = situacionDeRebase.ObtenerdistanciaAtrasMedio(),
         d2 = situacionDeRebase.ObtenerdistanciaAtrasFrente(),
@@ -187,8 +189,22 @@ testSituacionRebase() == (
         d3_2 = situacionDeRebase.ObtenerdistanciaMedioDelante(),
         t1_2 = situacionDeRebase.ObtenerTiempoAtrasFrente(),
         t2_2 = situacionDeRebase.ObtenerTiempoMedioDelante(),
-        t3_2 = situacionDeRebase.ObtenerTiempoAtrasMedio()
+        t3_2 = situacionDeRebase.ObtenerTiempoAtrasMedio(),
         
+
+        -- nueva actualizacion
+        avisos3 = situacionDeRebase.actualizarSituacion(mk_SituacionDeRebase`datosCarro(-15.397365, -70.093015, 105), mk_SituacionDeRebase`datosCarro(-15.395204, -70.092350,70), mk_SituacionDeRebase`datosCarro(-15.384918, -70.089521, 74), 0.1),
+        
+        -- nuevo 3 : -15.384791, -70.089427
+        -- nuevo 2 : -15.395707, -70.092400
+        -- nuevo 1 : -15.398794, -70.093281
+
+        d1_3 = situacionDeRebase.ObtenerdistanciaAtrasMedio(),
+        d2_3= situacionDeRebase.ObtenerdistanciaAtrasFrente(),
+        d3_3 = situacionDeRebase.ObtenerdistanciaMedioDelante(),
+        t1_3 = situacionDeRebase.ObtenerTiempoAtrasFrente(),
+        t2_3 = situacionDeRebase.ObtenerTiempoMedioDelante(),
+        t3_3 = situacionDeRebase.ObtenerTiempoAtrasMedio()
 
 
 
