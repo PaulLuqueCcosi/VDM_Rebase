@@ -49,12 +49,12 @@ operations
       timepoUltimaActualizacion := tiempoTranscurrido;
       isActualizado := true;
 
-      -- si esatamos en rebase
-      if isEnRebase() then
-        estado := <Rebase>;
+      -- -- si esatamos en rebase
+      -- if isEnRebase() then
+      --   estado := <Rebase>;
       
-      if estado = <Rebase> then
-        calcularRiesgoRebase();
+      -- if estado = <Rebase> then
+      calcularRiesgoRebase();
       
 
       return [avisoAutoAtras, avisoAutoMedio, avisoAutoFrente];
@@ -102,16 +102,16 @@ operations
       return true;
   );
 
-  private isEnRebase:() ==> bool
-  isEnRebase() == (
-    if estado = <Rebase> 
-      then  return true
-    elseif  diferenciaVelocidades(autos.autoAtras, autos.autoMedio) >= 15
-      then return true
-    else 
-      return false; 
+  -- private isEnRebase:() ==> bool
+  -- isEnRebase() == (
+  --   if estado = <Rebase> 
+  --     then  return true
+  --   elseif  diferenciaVelocidades(autos.autoAtras, autos.autoMedio) >= 15
+  --     then return true
+  --   else 
+  --     return false; 
 
-  );
+  -- );
 
 
   private actualizarDatosAuto: datosCarro * Auto ==> ()
@@ -120,11 +120,11 @@ operations
     auto.setVelocidad(datos.velocidad);
   );
 
-  private diferenciaVelocidades: Auto * Auto ==> real
-  diferenciaVelocidades(auto1, auto2) == (
-    return auto1.getVelocidad() - auto2.getVelocidad();
+  -- private diferenciaVelocidades: Auto * Auto ==> real
+  -- diferenciaVelocidades(auto1, auto2) == (
+  --   return auto1.getVelocidad() - auto2.getVelocidad();
 
-  ) pre isActualizado = true;
+  -- ) pre isActualizado = true;
   
   -- Método para obtener la distancia entre el auto de atrás y el auto del medio
   public ObtenerdistanciaAtrasMedio: () ==> real
