@@ -21,6 +21,7 @@ instance variables
     ace3 : real;
     num1 : real;
     num2: real;
+    distancia : real;
     raices : seq of real;
 
 
@@ -83,7 +84,37 @@ operations
             vel2 = carretera2.getVelocidadMaxima(),
             vel3 = carretera3.getVelocidadMaxima(),
             distancia2 = carretera2.distanciaMinimaAdelantamiento(),
-            distancia3 = carretera3.distanciaMinimaAdelantamiento()
+            distancia3 = carretera3.distanciaMinimaAdelantamiento(),
+
+
+            carretera = new Carretera(<Recto>, <Doble_Via>, 30),
+            distancia = carretera.distanciaMinimaAdelantamiento(),
+            carretera = new Carretera(<Recto>, <Doble_Via>, 35),
+            distancia = carretera.distanciaMinimaAdelantamiento(),
+            carretera = new Carretera(<Recto>, <Doble_Via>, 45),
+            distancia = carretera.distanciaMinimaAdelantamiento(),
+            carretera = new Carretera(<Recto>, <Doble_Via>, 55),
+            distancia = carretera.distanciaMinimaAdelantamiento(),
+            carretera = new Carretera(<Recto>, <Doble_Via>, 65),
+            distancia = carretera.distanciaMinimaAdelantamiento(),
+            carretera = new Carretera(<Recto>, <Doble_Via>, 75),
+            distancia = carretera.distanciaMinimaAdelantamiento(),
+            carretera = new Carretera(<Recto>, <Doble_Via>, 85),
+            distancia = carretera.distanciaMinimaAdelantamiento(),
+            carretera = new Carretera(<Recto>, <Doble_Via>, 95),
+            distancia = carretera.distanciaMinimaAdelantamiento(),
+            carretera = new Carretera(<Recto>, <Doble_Via>, 105),
+            distancia = carretera.distanciaMinimaAdelantamiento(),
+            carretera = new Carretera(<Recto>, <Doble_Via>, 115),
+            distancia = carretera.distanciaMinimaAdelantamiento(),
+            carretera = new Carretera(<Recto>, <Doble_Via>, 125),
+            distancia = carretera.distanciaMinimaAdelantamiento(),
+            carretera = new Carretera(<Recto>, <Doble_Via>, 140),
+            distancia = carretera.distanciaMinimaAdelantamiento()
+            
+            
+
+
             
         in
             return true;
