@@ -21,6 +21,7 @@ instance variables
     ace3 : real;
     num1 : real;
     num2: real;
+    raices : seq of real;
 
 
 operations
@@ -72,7 +73,8 @@ operations
     testCarretera() == (
         let
             carretera = new Carretera(<Recto>, <Doble_Via>, 90),
-            distancia = carretera.getDistanciaPuntos(-16.3421, -17.353, -16.34341, -17.453),
+            distancia = carretera.getDistanciaPuntos(-15.400261, -70.094407,-15.400261, -70.094407),
+            distancia = carretera.getDistanciaPuntos(-15.400261, -70.094407, -15.359303, -70.082575),
             vel = carretera.getVelocidadMaxima(),
             distancia = carretera.distanciaMinimaAdelantamiento(),
             carretera2 = new Carretera(<Curva_en_U>, <Doble_Via>, 100),
@@ -82,6 +84,7 @@ operations
             vel3 = carretera3.getVelocidadMaxima(),
             distancia2 = carretera2.distanciaMinimaAdelantamiento(),
             distancia3 = carretera3.distanciaMinimaAdelantamiento()
+            
         in
             return true;
     );
@@ -154,11 +157,14 @@ public testEcuacion: () ==> bool
 testEcuacion() == (
     -- Crear una instancia de la clase Ecuacion
     ecuacion := new Ecuacion();
+    raices := ecuacion.calcularRaices(1,4,4); -- discrimiannte 0
+    raices := ecuacion.calcularRaices(1,2,5); -- discrminante negativo
+
     num1 := ecuacion.getPositivo(ecuacion.calcularRaices(1, 0, -1));
     num2 := ecuacion.getPositivo(ecuacion.calcularRaices(2, -5, -3));
     
-    -- ecuacion.raices := [1.0, -2.0];
-    -- ecuacion.getPositivo(ecuacion.raices);
+    raices := [-1.0, 2.0];
+    num2 := ecuacion.getPositivo(raices);
 
     return true;
 );

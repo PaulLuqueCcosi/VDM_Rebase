@@ -6,7 +6,7 @@ types
 
 values
   public radioTierraKm : real = 6371.0; -- km
-  public pi : real = 3.14159 -- pi
+  public pi : real = 3.14159 --
 
 instance variables
   forma: formaCarretera;
@@ -15,12 +15,12 @@ instance variables
 
 functions
 
-  private min: real * real -> real
-    min(x, y) ==
-      if x < y then
-        x
-      else
-        y;
+  -- private min: real * real -> real
+  --   min(x, y) ==
+  --     if x < y then
+  --       x
+  --     else
+  --       y;
 
   private toRadians: real +> real
       toRadians(degree) ==
@@ -34,7 +34,7 @@ functions
       sinLat = MATH`sin(dlat / 2.0),
       sinlon = MATH`sin(dlon / 2.0),
       a = (sinLat * sinLat) + MATH`cos(toRadians(lat1)) * MATH`cos(toRadians(lat2)) * (sinlon * sinlon),
-      c = 2.0 * MATH`asin(min(1.0, MATH`sqrt(a)))
+      c = 2.0 * MATH`asin(MATH`sqrt(a))
     in
       radioTierraKm * c;
 

@@ -27,7 +27,7 @@ operations
   public calcularRaices: real * real * real ==> seq of real
   calcularRaices(a, b, c) == (
     let
-      discriminante : real = b * b - 4 * a * c
+      discriminante : real = (b * b) - (4 * a * c)
     in
       if discriminante = 0 then 
         (raices := [-b / 2 * a];
