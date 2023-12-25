@@ -164,8 +164,7 @@ testSituacionRebase() == (
     -- Crear situaciones de rebase con los autos y la carretera adecuados
     situacionDeRebase := new SituacionDeRebase(auto1, auto2, auto3, carretera);
     let 
-        avisos = situacionDeRebase.actualizarSituacion(mk_SituacionDeRebase`datosCarro(-15.400845, -70.093876, 92), 
-        mk_SituacionDeRebase`datosCarro(-15.398683, -70.093359, 90), mk_SituacionDeRebase`datosCarro(-15.391781, -70.091203, 75), 0.2),
+        avisos = situacionDeRebase.actualizarSituacion(mk_SituacionDeRebase`datosCarro(-15.400845, -70.093876, 92), mk_SituacionDeRebase`datosCarro(-15.396256, -70.092593,80), mk_SituacionDeRebase`datosCarro(-15.383524, -70.089113, 75), 0.2),
         d1 = situacionDeRebase.ObtenerdistanciaAtrasMedio(),
         d2 = situacionDeRebase.ObtenerdistanciaAtrasFrente(),
         d3 = situacionDeRebase.ObtenerdistanciaMedioDelante(),
@@ -174,7 +173,27 @@ testSituacionRebase() == (
         t3 = situacionDeRebase.ObtenerTiempoAtrasMedio(),
         carro1 = situacionDeRebase.GetCarroAtras(),
         carro2 = situacionDeRebase.GetCarroMedio(),
-        carro3 = situacionDeRebase.GetCarroAdelante()
+        carro3 = situacionDeRebase.GetCarroAdelante(),
+
+        -- nueva actualizacion
+        avisos2 = situacionDeRebase.actualizarSituacion(mk_SituacionDeRebase`datosCarro(-15.398794, -70.093281, 95), mk_SituacionDeRebase`datosCarro(-15.395707, -70.092400,78), mk_SituacionDeRebase`datosCarro(-15.384791, -70.089427, 75), 0.2),
+        
+        -- nuevo 3 : -15.384791, -70.089427
+        -- nuevo 2 : -15.395707, -70.092400
+        -- nuevo 1 : -15.398794, -70.093281
+
+        d1_2 = situacionDeRebase.ObtenerdistanciaAtrasMedio(),
+        d2_2 = situacionDeRebase.ObtenerdistanciaAtrasFrente(),
+        d3_2 = situacionDeRebase.ObtenerdistanciaMedioDelante(),
+        t1_2 = situacionDeRebase.ObtenerTiempoAtrasFrente(),
+        t2_2 = situacionDeRebase.ObtenerTiempoMedioDelante(),
+        t3_2 = situacionDeRebase.ObtenerTiempoAtrasMedio()
+        
+
+
+
+
+
     in
         (
             situacionDeRebase.calcularRiesgoRebase();

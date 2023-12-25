@@ -243,8 +243,8 @@ operations
       d = terrenoCarretera.getDistanciaPuntos(lat2,lon2,lat1, lon1),
 
       -- valores para resolver la ecu.
-      a = (a2 - a1) /2,
-      b = v2 - v1,
+      a = (a1 - a2) /2,
+      b = v1 - v2,
       c = -d
 
     in
